@@ -7,6 +7,6 @@ run('npm run build', path.join(root, 'site'));
 fs.rmSync(path.join(root, 'dist'), { recursive: true, force: true });
 fs.cpSync(path.join(root, 'site', 'dist'), path.join(root, 'dist'), { recursive: true });
 fs.cpSync(path.join(root, 'public'), path.join(root, 'dist'), { recursive: true });
-fs.writeFileSync(path.join(root, 'dist', '_headers'), '/patch/*\n  Cache-Control: no-cache\n');
+fs.writeFileSync(path.join(root, 'dist', '_headers'), '/*\n  Cache-Control: no-cache\n/assets/*\n  Cache-Control: public, max-age=31536000, immutable\n/patch/*\n  Cache-Control: no-cache\n');
 fs.writeFileSync(path.join(root, 'dist', '_routes.json'), JSON.stringify({ version: 1, include: ['/api/*'], exclude: [] }));
 console.log('dist pronto');
