@@ -100,7 +100,7 @@ async function sessionUser(c) {
     return u && !u.is_banned ? u : null;
 }
 
-async function createAccount(c, b, minPass, admin = 0) {
+async function createAccount(c, b, minPass, admin = 1) {
     const { username, email, password } = b;
     if (typeof username !== 'string' || typeof email !== 'string' || typeof password !== 'string') return { status: 400, error: 'Dados incompletos.' };
     if (!/^[a-zA-Z0-9_]{3,32}$/.test(username)) return { status: 400, error: 'Usuario invalido (3-32: letras, numeros, _).' };
