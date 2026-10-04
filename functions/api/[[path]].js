@@ -156,6 +156,20 @@ app.post('/auth/verify', async c => {
     return c.json({ valid: true, accountId: d.sub, username: d.usr });
 });
 
+// ---------- relatorios de erro do launcher/jogo (sem autenticacao: o jogo crashou antes do login) ----------
+app.post('/crash-report', async c => {
+    const ip = ipOf(c);
+    const recent = await one(c, 'SELECT COUNT(*) AS n FROM crash_reports WHERE ip_address = ? AND created_at > ?', ip, now() - 3600);
+    if (recent.n >= 10) return c.json({ success: false, error: 'Muitos relatorios enviados. Tente novamente mais tarde.' }, 429);
+    const b = await body(c);
+    const log = typeof b.log === 'string' ? b.log.slice(0, 200000) : '';
+    await run(c, 'INSERT INTO crash_reports (launcher_version, game_version, exit_code, exit_signal, os_info, log_text, ip_address) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        String(b.launcherVersion || '').slice(0, 32), String(b.gameVersion || '').slice(0, 32),
+        Number.isFinite(b.exitCode) ? int(b.exitCode) : null, String(b.exitSignal || '').slice(0, 32),
+        String(b.osInfo || '').slice(0, 500), log, ip);
+    return c.json({ success: true });
+});
+
 // ---------- site (/api/v1) ----------
 const ok = (c, data, status = 200) => c.json({ success: true, data }, status);
 const fail = (c, status, code, message) => c.json({ success: false, error: { code, message } }, status);
@@ -382,6 +396,12 @@ adm.get('/characters/:id/inventory', async c => {
     return c.json({ success: true, items: await all(c, 'SELECT slot_index AS slot, item_id AS itemId, quantity, durability, refine_level AS refine, is_equipped AS equipped FROM inventory WHERE character_id = ? ORDER BY slot_index', id) });
 });
 adm.get('/admin/me', c => c.json({ success: true, admin: !!c.get('user').is_admin, username: c.get('user').username }));
+adm.get('/admin/crash-reports', async c => {
+    if (!c.get('user').is_admin) return c.json({ success: false, error: 'Acesso negado.' }, 403);
+    const limit = Math.max(1, Math.min(100, int(c.req.query('limit'), 30)));
+    const reports = await all(c, 'SELECT id, launcher_version, game_version, exit_code, exit_signal, os_info, log_text, ip_address, created_at FROM crash_reports ORDER BY created_at DESC LIMIT ?', limit);
+    return c.json({ success: true, reports });
+});
 adm.post('/admin/give', async c => {
     if (!c.get('user').is_admin) return c.json({ success: false, error: 'Acesso negado.' }, 403);
     const b = await body(c);
