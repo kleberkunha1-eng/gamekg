@@ -1,0 +1,32 @@
+Analyze BOTH this website repository and my existing Unity game project.
+
+This website is the official game portal and must become part of the same ecosystem as the Unity game. Do not redesign or replace the website unless integration requires a small change. Preserve its existing frontend structure and visual design.
+
+Read first:
+- README.md
+- API-CONTRACT.md
+- COPILOT-UNITY-INTEGRATION.md
+- openapi.yaml
+- src/services/api.ts
+- src/types/index.ts
+- src/config/game.ts
+
+Then inspect the Unity project and identify existing Account/Login, Player, Character, Inventory, Items, Equipment, Level/XP, Currency/Gold, Guild, Combat, Save and Networking systems.
+
+Target architecture:
+Website -> HTTPS Backend API -> Database
+Unity Client -> HTTPS Backend API / authoritative game server -> Database
+
+Never connect the website or Unity client directly to SQL.
+
+The same account must work on website and Unity. Website pages for rankings, game database, shop, account and server status must read live data from the shared backend. Critical gameplay data and purchases must be server authoritative.
+
+Before coding, provide:
+1. Current Unity architecture found
+2. Reusable systems found
+3. Backend stack recommendation
+4. Database schema proposal
+5. API endpoint mapping to this website
+6. Exact files you will create/modify
+
+After that, implement incrementally and test after each major stage. Keep secrets outside source control and use environment variables. Do not duplicate working Unity systems.

@@ -1,0 +1,21 @@
+{
+    "name": "gamekg",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build": "node tools/build.js",
+        "items": "node tools/gen-items.js",
+        "deploy": "node tools/build.js && wrangler pages deploy dist --project-name gamekg --branch main"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "type": "commonjs",
+    "devDependencies": {
+        "wrangler": "^4.147.0"
+    },
+    "dependencies": {
+        "hono": "^4.13.13"
+    }
+}

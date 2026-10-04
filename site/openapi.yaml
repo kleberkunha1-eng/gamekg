@@ -1,0 +1,86 @@
+openapi: 3.1.0
+info:
+  title: GAME PROJECT - K/G API
+  version: 1.0.0
+servers:
+  - url: https://api.example.com/api/v1
+paths:
+  /server/status:
+    get:
+      summary: Public server status
+      responses:
+        '200': { description: Server status }
+  /news:
+    get:
+      summary: List news and events
+      responses:
+        '200': { description: News list }
+  /rankings/players:
+    get:
+      summary: Player ranking
+      responses:
+        '200': { description: Ranking list }
+  /database/monsters:
+    get:
+      summary: Monster database
+      responses:
+        '200': { description: Monster list }
+  /database/items:
+    get:
+      summary: Item database
+      responses:
+        '200': { description: Item list }
+  /shop/products:
+    get:
+      summary: Active shop catalog
+      responses:
+        '200': { description: Product list }
+  /auth/register:
+    post:
+      summary: Register account
+      responses:
+        '201': { description: Account created }
+  /auth/login:
+    post:
+      summary: Authenticate account
+      responses:
+        '200': { description: Authenticated }
+        '401': { description: Invalid credentials }
+  /auth/refresh:
+    post:
+      summary: Refresh session
+      responses:
+        '200': { description: Session refreshed }
+  /auth/logout:
+    post:
+      summary: Logout and revoke session
+      responses:
+        '204': { description: Logged out }
+  /account/me:
+    get:
+      summary: Current account
+      responses:
+        '200': { description: Account profile }
+        '401': { description: Unauthorized }
+  /characters:
+    get:
+      summary: Current account characters
+      responses:
+        '200': { description: Character list }
+  /characters/{id}/inventory:
+    get:
+      summary: Character inventory
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: Inventory }
+        '403': { description: Not owner }
+  /shop/purchases:
+    post:
+      summary: Purchase shop product
+      responses:
+        '200': { description: Purchase completed }
+        '409': { description: Purchase cannot be completed }

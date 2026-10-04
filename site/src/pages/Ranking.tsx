@@ -1,0 +1,6 @@
+import { useMemo, useState } from 'react';
+import { PageHero } from '../components/PageHero';
+import { api } from '../services/api';
+import { useApi } from '../hooks';
+import type { RankingEntry } from '../types';
+export function Ranking(){const rankings=useApi<RankingEntry[]>(()=>api.getRankings() as Promise<RankingEntry[]>,[]); const [q,setQ]=useState(''); const rows=useMemo(()=>rankings.filter(x=>x.name.toLowerCase().includes(q.toLowerCase())||x.guild.toLowerCase().includes(q.toLowerCase())),[q,rankings]); return <><PageHero eyebrow="COMPETITION" title="World Rankings" text="Live-ready ranking tables for players, PvP and guild performance."/><section className="section"><div className="container"><div className="toolbar"><div className="tabs"><button className="active">Players</button><button>PvP</button><button>Guilds</button></div><input value={q} onChange={e=>setQ(e.target.value)} placeholder="Search player or guild"/></div><div className="table-wrap"><table><thead><tr><th>Rank</th><th>Player</th><th>Level</th><th>Class</th><th>Guild</th><th>Power</th></tr></thead><tbody>{rows.map(p=><tr key={p.rank}><td><span className="rank-badge">{p.rank}</span></td><td><strong>{p.name}</strong></td><td>{p.level}</td><td>{p.className}</td><td>{p.guild}</td><td>{p.power.toLocaleString()}</td></tr>)}</tbody></table></div></div></section></>}

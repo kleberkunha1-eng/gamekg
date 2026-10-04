@@ -1,0 +1,1 @@
+import { Link } from 'react-router-dom'; export function NotFound(){return <section className="auth-section"><div className="auth-card"><div className="eyebrow">404</div><h1>Lost at sea</h1><p>The page you requested does not exist.</p><Link className="button" to="/">Return home</Link></div></section>}
