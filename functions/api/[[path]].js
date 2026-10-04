@@ -57,6 +57,9 @@ async function signJwt(payload, secret, ttl) {
     return data + '.' + b64url(sig);
 }
 async function verifyJwt(token, secret) {
+    try { return await verifyJwtUnsafe(token, secret); } catch { return null; }
+}
+async function verifyJwtUnsafe(token, secret) {
     const p = String(token).split('.');
     if (p.length !== 3) return null;
     const ok = await crypto.subtle.verify('HMAC', await hmacKey(secret, 'verify'), unb64url(p[2]), enc.encode(p[0] + '.' + p[1]));
