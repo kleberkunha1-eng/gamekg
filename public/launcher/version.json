@@ -1,1 +1,1 @@
-{"version":"1.0.4","notes":"Instalacao automatica/manual do Visual C++ Redistributable x64 (corrige erro 0xc000007b em maquinas sem esse componente)."}
+{"version":"1.0.5","notes":"Diagnostico automatico via Log de Eventos do Windows: quando o jogo fecha sozinho, o launcher agora captura o evento 'Application Popup' do sistema (com o nome exato da DLL/componente que causou a falha) e envia junto no relatorio de erro, alem de mostrar na propria tela."}
