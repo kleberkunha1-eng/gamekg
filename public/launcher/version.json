@@ -1,1 +1,1 @@
-{"version":"1.0.3","notes":"Deteccao de bloqueio do antivirus, captura de log de crash e aviso de versao desatualizada."}
+{"version":"1.0.4","notes":"Instalacao automatica/manual do Visual C++ Redistributable x64 (corrige erro 0xc000007b em maquinas sem esse componente)."}
