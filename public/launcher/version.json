@@ -1,4 +1,1 @@
-﻿{
-  "version": "1.0.3",
-  "notes": "Deteccao de bloqueio do antivirus, captura de log de crash e aviso de versao desatualizada."
-}
+{"version":"1.0.3","notes":"Deteccao de bloqueio do antivirus, captura de log de crash e aviso de versao desatualizada."}
