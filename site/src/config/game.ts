@@ -9,5 +9,6 @@ export const gameConfig = {
   useMocks: String(import.meta.env.VITE_USE_MOCKS ?? 'true').toLowerCase() === 'true',
   downloadUrl:
     import.meta.env.VITE_GAME_DOWNLOAD_URL || 'https://example.com/download/game-installer.exe',
+  itchUrl: import.meta.env.VITE_ITCH_URL || 'https://kg-online.itch.io/kg-online',
   discordUrl: import.meta.env.VITE_DISCORD_URL || '#',
 };
